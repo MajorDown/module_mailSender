@@ -17,10 +17,10 @@ const MailSender = () => {
   }, [formLog]);
 
   // HANDLERS
-  const handleSendMessage = async (e) => {
-    e.preventDefault();
+  const handleSendMessage = async (event) => {
+    event.preventDefault();
     try {
-      const response = await fetch("API_URL/send-email", {
+      const response = await fetch("/send-email", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,6 +37,7 @@ const MailSender = () => {
         setInputPassword("");
         setInputMessage("");
         setFormLog("E-mail envoyé avec succès !");
+        setTimeout(() => setFormLog(""), 5000);
       }
     } catch (error) {
       // En cas d'erreur lors de la requête, afficher le message d'erreur
@@ -48,29 +49,26 @@ const MailSender = () => {
   return (
     <div id="mailSender">
       <form onSubmit={(event) => handleSendMessage(event)}>
-        <label htmlFor="email">Renseignez votre email :</label>
+        <label htmlFor="MSEmail">Renseignez votre email :</label>
         <input
           type="email"
-          name="email"
-          id="email"
+          id="MSEmail"
           required
           value={inputEmail}
           onChange={setInputEmail}
         />
-        <label htmlFor="phone">Renseigner votre numéro de tel :</label>
+        <label htmlFor="MSPhone">Renseigner votre numéro de tel :</label>
         <input
           type="tel"
-          name="phone"
-          id="phone"
+          id="MSPhone"
           required
           value={inputPassword}
           onChange={setInputPassword}
         />
-        <label htmlFor="message">Ecrivez ici votre message</label>
+        <label htmlFor="MSMessage">Ecrivez ici votre message</label>
         <input
           type="text"
-          name="message"
-          id="message"
+          id="MSMessage"
           required
           value={inputMessage}
           onChange={setInputMessage}

@@ -13,17 +13,17 @@ app.post("/send-email", checkSiteAuthorization, (req, res) => {
 
   // Configurer le transporteur d'e-mails avec les informations de l'adresse GMX dédiée
   const transporter = nodemailer.createTransport({
-    host: "smtp.gmx.com",
+    host: "mail.gmx.com",
     port: 587,
     auth: {
-      user: process.env.GMX_EMAIL, // Remplacez par l'adresse e-mail GMX dédiée
-      pass: process.env.GMX_PASSWORD, // Remplacez par le mot de passe de l'adresse GMX
+      user: process.env.MAILSENDER_EMAIL,
+      pass: process.env.MAILSENDER_PASSWORD,
     },
   });
 
   // Définir le contenu de l'e-mail
   const mailOptions = {
-    from: process.env.GMX_EMAIL, // Remplacez par l'adresse e-mail GMX dédiée
+    from: email,
     to: site.email,
     subject: `${site.url} ~> Vous avez un nouveau message`,
     html: `<p>Bonjour, vous avez reçu un nouveau message envoyé depuis <strong>${site.url}</strong></p>
@@ -31,6 +31,7 @@ app.post("/send-email", checkSiteAuthorization, (req, res) => {
     <p>Numéro de tel : <strong>${phone}</strong></p>
     <p>Message :</p>
     <p>${message}</p>
+    <br/>
     <p>Ce message vous est transmi depuis l'API ~mailSender~</p>
     <p>En cas de difficultés ou de questions sur le fonctionnement de mailSender, n'hésitez à répondre à ce mail</p>`,
   };
